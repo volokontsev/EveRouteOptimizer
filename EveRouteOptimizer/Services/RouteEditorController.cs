@@ -8,6 +8,7 @@ namespace EveRouteOptimizer.Services
 {
     public class RouteEditorController
     {
+        public event Action? RouteUpdated;
         private readonly RouteManager _routeManager;
         private readonly Dictionary<long, SolarSystem> _systems;
         private readonly Dictionary<long, List<long>> _graph;
@@ -41,7 +42,8 @@ namespace EveRouteOptimizer.Services
                 var updated = builder.Result;
                 if (updated != null)
                 {
-                    _routeManager.Update(name, updated);
+                    _routeManager.Update(name, updated);    
+                    RouteUpdated?.Invoke(); // уведомляем внешнюю форму
                 }
             }
         }

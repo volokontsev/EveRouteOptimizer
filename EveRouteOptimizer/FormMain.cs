@@ -43,6 +43,7 @@ namespace EveRouteOptimizer
             routeBuilderController = new RouteBuilderController(_systems, _graph, routeManager);
             routeTableController = new RouteTableController(dgvRoutes, routeManager, _systems, _graph);
             routeEditorController = new RouteEditorController(dgvRoutes, routeManager, _systems, _graph);
+            routeEditorController.RouteUpdated += routeTableController.Refresh;
 
             routeTableController.Refresh();
         }
