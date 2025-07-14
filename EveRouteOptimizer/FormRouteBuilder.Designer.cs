@@ -36,7 +36,7 @@
             // 
             this.btnCalculate.Location = new System.Drawing.Point(20, 230);
             this.btnCalculate.Name = "btnCalculate";
-            this.btnCalculate.Size = new System.Drawing.Size(120, 30);
+            this.btnCalculate.Size = new System.Drawing.Size(120, 40);
             this.btnCalculate.TabIndex = 1;
             this.btnCalculate.Text = "Рассчитать";
             this.btnCalculate.UseVisualStyleBackColor = true;
@@ -66,7 +66,7 @@
             this.MinimizeBox = false;
             this.Name = "FormRouteBuilder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Рассчитать маршрут";
+            this.Text = "Маршрут";
             this.ResumeLayout(false);
             this.PerformLayout();
         }
