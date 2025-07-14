@@ -12,12 +12,14 @@ namespace EveRouteOptimizer.Services
         private readonly RouteManager _routeManager;
         private readonly CharacterManager _characterManager;
         private readonly Dictionary<long, SolarSystem> _systems;
+        private readonly Action<string> _notify;
 
-        public RouteSender(RouteManager routeManager, CharacterManager characterManager, Dictionary<long, SolarSystem> systems)
+        public RouteSender(RouteManager routeManager, CharacterManager characterManager, Dictionary<long, SolarSystem> systems, Action<string> notify)
         {
             _routeManager = routeManager;
             _characterManager = characterManager;
             _systems = systems;
+            _notify = notify;
         }
 
         public async Task SendByRouteNameAsync(string? name)
@@ -44,7 +46,7 @@ namespace EveRouteOptimizer.Services
 
             var client = new EsiApiClient(active);
             bool ok = await client.SetWaypointsAsync(active.CharacterId, route.SystemNames, _systems);
-            MessageBox.Show(ok ? "Маршрут установлен!" : "Ошибка установки маршрута.");
+            _notify(ok ? "Маршрут установлен!" : "Ошибка установки маршрута.");
         }
     }
 }

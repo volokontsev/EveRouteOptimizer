@@ -10,6 +10,8 @@
         private System.Windows.Forms.ComboBox cmbCharacters;
         private System.Windows.Forms.Button btnAddCharacter;
         private System.Windows.Forms.Button btnRemoveCharacter;
+        private StatusStrip statusStrip;
+        private ToolStripStatusLabel statusLabel;
 
         protected override void Dispose(bool disposing)
         {
@@ -121,6 +123,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvRoutes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureAvatar)).EndInit();
             this.ResumeLayout(false);
+
+            this.statusStrip = new StatusStrip();
+            this.statusLabel = new ToolStripStatusLabel();
+
+            this.statusStrip.Items.Add(this.statusLabel);
+            this.statusStrip.Dock = DockStyle.Bottom;
+
+            this.Controls.Add(this.statusStrip);
         }
     }
 }

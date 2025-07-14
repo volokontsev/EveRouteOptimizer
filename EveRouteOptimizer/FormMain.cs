@@ -21,6 +21,8 @@ namespace EveRouteOptimizer
         private Dictionary<long, SolarSystem> _systems = new();
         private Dictionary<long, List<long>> _graph = new();
 
+        private System.Windows.Forms.Timer statusClearTimer;
+
         public FormMain()
         {
             InitializeComponent();
@@ -39,11 +41,20 @@ namespace EveRouteOptimizer
             _graph = result.Graph;
 
             routeManager = new RouteManager();
-            routeSender = new RouteSender(routeManager, characterManager, _systems);
+            routeSender = new RouteSender(routeManager, characterManager, _systems, SetStatus);
             routeBuilderController = new RouteBuilderController(_systems, _graph, routeManager);
             routeTableController = new RouteTableController(dgvRoutes, routeManager, _systems, _graph);
             routeEditorController = new RouteEditorController(dgvRoutes, routeManager, _systems, _graph);
             routeEditorController.RouteUpdated += routeTableController.Refresh;
+            routeSender = new RouteSender(routeManager, characterManager, _systems, SetStatus);
+
+            statusClearTimer = new System.Windows.Forms.Timer();
+            statusClearTimer.Interval = 5000; // 5 секунд
+            statusClearTimer.Tick += (s, e) =>
+            {
+                statusLabel.Text = "";
+                statusClearTimer.Stop();
+            };
 
             routeTableController.Refresh();
         }
@@ -104,7 +115,7 @@ namespace EveRouteOptimizer
         {
             if (dgvRoutes.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Выберите маршрут.");
+                SetStatus("Выберите маршрут.");
                 return;
             }
 
@@ -113,5 +124,12 @@ namespace EveRouteOptimizer
 
             await routeSender.SendByRouteNameAsync(name);
         }
+
+        public void SetStatus(string message)
+{
+    statusLabel.Text = message;
+    statusClearTimer.Stop();    // сбросить старый таймер, если был
+    statusClearTimer.Start();   // запустить новый отсчёт
+}
     }
 }
